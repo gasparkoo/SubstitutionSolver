@@ -1,5 +1,6 @@
 class Vrchol:
     def __init__(self):
+        self.slova = []
         self.deti = dict()
     
     def novy_syn(self, pismeno):
@@ -19,13 +20,14 @@ class Strom:
             if pismeno in aktualny.deti:
                 aktualny = aktualny.novy_syn(pismeno)
             else:
-                return False
-        return True
+                return None
+        return aktualny
 
     def pridaj(self, slovo):
         aktualny = self.koren
         for pismeno in slovo + '#':
             aktualny = aktualny.novy_syn(pismeno)
+        return aktualny
     
     @classmethod
     def zo_slovnika(cls, cesta_k_slovniku):
@@ -37,5 +39,6 @@ class Strom:
             prazdny_strom.pridaj(slovo)
         return prazdny_strom
 
-novy_strom = Strom.zo_slovnika("slovniky/words.txt")
-# print(novy_strom.najdi("aBase"))
+if __name__ == "__main__":
+    novy_strom = Strom.zo_slovnika("slovniky/words.txt")
+    print(novy_strom.najdi("aBase"))
