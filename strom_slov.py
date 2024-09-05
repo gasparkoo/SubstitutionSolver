@@ -31,14 +31,22 @@ class Strom:
     
     @classmethod
     def zo_slovnika(cls, cesta_k_slovniku):
+        pomoc_pole =[]
         prazdny_strom = cls()
         subor = open(cesta_k_slovniku,"r")
         for riadok in subor.readlines():
             slovo,pocet = riadok.strip().split()
             slovo = slovo.lower()
+            if "'" in slovo:
+                continue
+            pomoc_pole.append((slovo,pocet))
+        subor.close()
+        for slovo, pocet in sorted(pomoc_pole,key=lambda x: x[1], reverse=True):
             prazdny_strom.pridaj(slovo)
         return prazdny_strom
 
 if __name__ == "__main__":
     novy_strom = Strom.zo_slovnika("slovniky/words.txt")
-    print(novy_strom.najdi("aBase"))
+
+    for slovo in ["The", "trouble", "with", "having", "an", "open", "mind"]:
+        print(novy_strom.najdi(slovo))
